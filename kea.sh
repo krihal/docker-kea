@@ -11,9 +11,12 @@ if [ ! -z "$GITREPO_ETC" ]; then
     
     git clone $GITREPO_ETC /tmp/kea_git_config
 	
-    if [ -f "/tmp/kea_git_config/kea-dhcp4.conf" ]; then	
+    if [ -f "/tmp/kea_git_config/kea-dhcp4.conf" ]; then
 	cp /tmp/kea_git_config/kea-dhcp4.conf /etc/kea/kea-dhcp4.conf
     fi
 fi
 
-kea-dhcp4
+mkdir -p /var/run/kea/
+touch /var/run/kea/logger_lockfile
+
+kea-dhcp4 -d -c /etc/kea/kea-dhcp4.conf
